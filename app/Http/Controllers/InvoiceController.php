@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Customer;
 use App\Invoice;
 
+use PDF;
+
 use App\Product;
 use App\Invoice_detail;
 
@@ -107,5 +109,15 @@ class InvoiceController extends Controller
     $invoice = Invoice::find($id);
     $invoice->delete();
     return redirect()->back()->with(['success' => 'Data telah dihapus']);
+    }
+
+    public function generateInvoice($id)
+    {
+    //GET DATA BERDASARKAN ID
+    $invoice = Invoice::with(['customer', 'detail', 'detail.product'])->find($id);
+    //LOAD PDF YANG MERUJUK KE VIEW PRINT.BLADE.PHP DENGAN MENGIRIMKAN DATA DARI INVOICE
+    //KEMUDIAN MENGGUNAKAN PENGATURAN LANDSCAPE A4
+    $pdf = PDF::loadView('invoice.print', compact('invoice'))->setPaper('a4', 'landscape');
+    return $pdf->stream();
     }
 }
