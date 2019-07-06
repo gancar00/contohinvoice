@@ -44,6 +44,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ route('invoice.index') }}" class="nav-link">List Invoice</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ url('/customer') }}" class="nav-link">Manajemen Pelanggan</a>
                         </li>
 
